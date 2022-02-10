@@ -5,8 +5,13 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@master
+    - name: find MSBuild
+      run: |
+        dir "%PROGRAMFILES(x86)%"
+        dir "%PROGRAMFILES%"
+      shell: cmd
     - name: get swig
-      run: Invoke-WebRequest -Uri "https://nchc.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip"  -OutFile ".\swigwin.zip"
+      run: Invoke-WebRequest -Uri "http://nchc.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip"  -OutFile ".\swigwin.zip"
       shell: powershell
     - name: expand swig
       run: |
@@ -17,11 +22,6 @@ jobs:
     - name: config site
       run:
         type nul > pjlib/include/pj/config_site.h
-      shell: cmd
-    - name: find MSBuild
-      run: |
-        dir "%PROGRAMFILES(x86)%"
-        dir "%PROGRAMFILES%"
       shell: cmd
     - name: MSBuild
       run: |
