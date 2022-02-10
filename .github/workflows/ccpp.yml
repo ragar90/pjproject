@@ -7,8 +7,8 @@ jobs:
     - uses: actions/checkout@master
     - name: find MSBuild
       run: |
-        dir "%PROGRAMFILES(x86)%"
-        dir "%PROGRAMFILES%"
+        dir "%PROGRAMFILES(x86)%\Microsoft Visual Studio"
+        dir "%PROGRAMFILES%\Microsoft Visual Studio"
       shell: cmd
     - name: get swig
       run: Invoke-WebRequest -Uri "http://nchc.dl.sourceforge.net/project/swig/swigwin/swigwin-4.0.1/swigwin-4.0.1.zip"  -OutFile ".\swigwin.zip"
