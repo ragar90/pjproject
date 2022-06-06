@@ -691,7 +691,7 @@ void Call::makeCall(const string &dst_uri, const CallOpParam &prm)
 		    PJSUA2_THROW(Error)
 {
 
-    PJ_LOG(4,(THIS_FILE, "Making call to acc %s", "904",);
+    PJ_LOG(4,(THIS_FILE, "Making call to acc %s", "904");
     pj_str_t pj_dst_uri = str2Pj(dst_uri);
     call_param param(prm.txOption, prm.opt, prm.reason);
     
