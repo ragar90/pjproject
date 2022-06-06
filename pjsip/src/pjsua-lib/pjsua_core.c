@@ -2238,6 +2238,8 @@ static void on_tp_state_callback(pjsip_transport *tp,
 				 pjsip_transport_state state,
 				 const pjsip_transport_state_info *info)
 {
+
+    PJ_LOG(4,(THIS_FILE, "on_tp_state_callback %s", "testing logs before pjsua_acc_on_tp_state_changed..."));
     if (pjsua_var.ua_cfg.cb.on_transport_state) {
 	(*pjsua_var.ua_cfg.cb.on_transport_state)(tp, state, info);
     }
