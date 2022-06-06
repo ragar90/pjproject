@@ -830,6 +830,8 @@ PJ_DEF(pj_status_t) pjsua_call_make_call(pjsua_acc_id acc_id,
 					 const pjsua_msg_data *msg_data,
 					 pjsua_call_id *p_call_id)
 {
+
+    PJ_LOG(4,(THIS_FILE, "Making call with acc #%d to %.*s", acc_id,(int)dest_uri->slen, dest_uri->ptr));
     pj_pool_t *tmp_pool = NULL;
     pjsip_dialog *dlg = NULL;
     pjsua_acc *acc;
