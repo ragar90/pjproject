@@ -2252,6 +2252,7 @@ static void on_tp_state_callback(pjsip_transport *tp,
 /* Set transport state callback */
 static void set_tp_state_cb()
 {
+    PJ_LOG(4,(THIS_FILE, "set_tp_state_cb %s", "testing logs before on_tp_state_callback..."));
     pjsip_tp_state_callback tpcb;
     pjsip_tpmgr *tpmgr;
 

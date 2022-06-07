@@ -4033,7 +4033,7 @@ void pjsua_acc_on_tp_state_changed(pjsip_transport *tp,
 				   pjsip_transport_state state,
 				   const pjsip_transport_state_info *info)
 {
-    PJ_LOG(4,(THIS_FILE, "pjsua_acc_on_tp_state_changed: %s","Testing log"));
+    PJ_LOG(4,(THIS_FILE, "pjsua_acc_on_tp_state_changed: %s","Testing logs while doing re-registration"));
     unsigned i;
 
     PJ_UNUSED_ARG(info);
