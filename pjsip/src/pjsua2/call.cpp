@@ -693,7 +693,7 @@ void Call::makeCall(const string *dst_uri_1, const CallOpParam *prm_1)
     PJ_LOG(4,(THIS_FILE, "Call::makeCall: casting pointers"));
     string dst_uri = &dst_uri_1;
     CallOpParam prm = &prm_1;
-    PJ_LOG(4,(THIS_FILE, "Call::makeCall: calling to %s", dst_uri));
+    PJ_LOG(4,(THIS_FILE, "Call::makeCall: calling to address"));
     pj_str_t pj_dst_uri = str2Pj(dst_uri);
     call_param param(prm.txOption, prm.opt, prm.reason);
     
