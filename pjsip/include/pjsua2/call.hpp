@@ -1511,6 +1511,9 @@ public:
      */
     void makeCall(const string &dst_uri, const CallOpParam &prm)
 		  PJSUA2_THROW(Error);
+          
+    void makeCall2()
+		  PJSUA2_THROW(Error);
 
     /**
      * Send response to incoming INVITE request with call setting param.
