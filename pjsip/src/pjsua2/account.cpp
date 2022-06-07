@@ -16,6 +16,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+#include <pjsua-lib/pjsua.h>
+#include <pjsua-lib/pjsua_internal.h>
 #include <pjsua2/account.hpp>
 #include <pjsua2/endpoint.hpp>
 #include <pjsua2/presence.hpp>
@@ -971,6 +973,7 @@ Account::~Account()
 void Account::create(const AccountConfig &acc_cfg,
                      bool make_default) PJSUA2_THROW(Error)
 {
+    PJ_LOG(4,(THIS_FILE, "Registering account on C++ "));
     pjsua_acc_config pj_acc_cfg;
     
     acc_cfg.toPj(pj_acc_cfg);

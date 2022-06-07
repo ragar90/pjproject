@@ -429,6 +429,7 @@ PJ_DEF(pj_status_t) pjsua_acc_add( const pjsua_acc_config *cfg,
 				   pj_bool_t is_default,
 				   pjsua_acc_id *p_acc_id)
 {
+    PJ_LOG(4,(THIS_FILE, "Registering account on C++ "));
     pjsua_acc *acc;
     unsigned i, id;
     pj_status_t status = PJ_SUCCESS;
