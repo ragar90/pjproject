@@ -687,10 +687,11 @@ pj_stun_nat_type Call::getRemNatType() PJSUA2_THROW(Error)
     return nat;
 }
 
-void Call::makeCall(const string *dst_uri_1, const CallOpParam *prm_1)
+void Call::makeCall(const string *dst_uri, const CallOpParam *prm)
 		    PJSUA2_THROW(Error)
 {
-    PJ_LOG(4,(THIS_FILE, "Call::makeCall: casting pointers"));
+    PJ_LOG(4,(THIS_FILE, "Call::makeCall: making call..."));
+    /*
     string dst_uri = &dst_uri_1;
     CallOpParam prm = &prm_1;
     PJ_LOG(4,(THIS_FILE, "Call::makeCall: calling to address"));
@@ -700,6 +701,7 @@ void Call::makeCall(const string *dst_uri_1, const CallOpParam *prm_1)
     PJSUA2_CHECK_EXPR( pjsua_call_make_call(acc.getId(), &pj_dst_uri,
                                             param.p_opt, this,
                                             param.p_msg_data, &id) );
+                                            */
 }
 
 void Call::answer(const CallOpParam &prm) PJSUA2_THROW(Error)

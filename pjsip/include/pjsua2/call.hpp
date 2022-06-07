@@ -1509,7 +1509,7 @@ public:
      * @param prm.txOption  Optional headers etc to be added to outgoing INVITE
      *                      request.
      */
-    void makeCall(const string *dst_uri_1, const CallOpParam *prm_1)
+    void makeCall(const string *dst_uri, const CallOpParam *prm)
 		  PJSUA2_THROW(Error);
 
     /**
