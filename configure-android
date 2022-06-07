@@ -88,7 +88,7 @@ if test "$1" = "--use-ndk-cflags" || [ "${NDK_VER}" -ge "17" ]; then
     NDK_BUILD=${ANDROID_NDK_ROOT}/ndk-build
   fi
 
-  NDK_OUT=`${NDK_BUILD} -n -C pjsip-apps/src/samples/android_sample APP_PLATFORM=${APP_PLATFORM} APP_ABI=${TARGET_ABI}`
+  NDK_OUT=`${NDK_BUILD} -n -C pjsip-apps/src/samples/android_sample APP_PLATFORM=${APP_PLATFORM} APP_ABI=${TARGET_ABI} NDK_DEBUG=1`
   if test ! "${NDK_OUT}"; then
     echo "$F error: failed to run ndk-build, check ANDROID_NDK_ROOT env var"
     exit 1
@@ -119,9 +119,9 @@ if test "$1" = "--use-ndk-cflags" || [ "${NDK_VER}" -ge "17" ]; then
       ISDUP="0"
       for j in $NDK_CFLAGS; do
         if test "$i" = "$j"; then
-	  ISDUP="1"
-	  break
-	fi
+          ISDUP="1"
+          break
+        fi
       done
       if test "${ISDUP}" = "1"; then
         continue
