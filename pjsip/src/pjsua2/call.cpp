@@ -687,7 +687,7 @@ pj_stun_nat_type Call::getRemNatType() PJSUA2_THROW(Error)
     return nat;
 }
 
-void Call::makeCall(const string *dst_uri, const CallOpParam *prm)
+void Call::makeCall(const string &dst_uri, const CallOpParam &prm)
 		    PJSUA2_THROW(Error)
 {
     PJ_LOG(4,(THIS_FILE, "Call::makeCall: making call..."));
