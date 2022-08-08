@@ -2586,6 +2586,7 @@ pj_status_t Endpoint::on_auth_create_aka_response_callback(pj_pool_t *pool,
                                            const pj_str_t *method,
                                            pjsip_digest_credential *auth)
 {
+    PJ_LOG(4,(THIS_FILE, "Endpoint::on_auth_create_aka_response_callback"));
     OnCredAuthParam prm;
     prm.digestChallenge.fromPj(*chal);
     prm.credentialInfo.fromPj(*cred);
