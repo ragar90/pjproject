@@ -1542,8 +1542,10 @@ static pj_bool_t on_connect_complete(pj_activesock_t *asock,
     }
 
     /* Start pending read */
+    PJ_LOG(4,(THIS_FILE, "Calling tcp_start_read on sip_transport_tcp.c"));
     status = tcp_start_read(tcp);
     if (status != PJ_SUCCESS) {
+    PJ_LOG(4,(THIS_FILE, "Returning PJ_FALSE on sip_transport_tcp.c"));
 	tcp_init_shutdown(tcp, status);
 	return PJ_FALSE;
     }
@@ -1569,6 +1571,8 @@ static pj_bool_t on_connect_complete(pj_activesock_t *asock,
 	tcp->ka_timer.id = PJ_TRUE;
 	pj_gettimeofday(&tcp->last_activity);
     }
+    
+    PJ_LOG(4,(THIS_FILE, "Returning PJ_TRUE on sip_transport_tcp.c"));
 
     return PJ_TRUE;
 }
