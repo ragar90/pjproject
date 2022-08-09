@@ -537,9 +537,10 @@ PJ_DEF(pj_status_t) pjsua_acc_add( const pjsua_acc_config *cfg,
     }
 
     pj_log_pop_indent();
+    
+    PJ_LOG(4,(THIS_FILE, "Returning PJ_TRUE on pjsua_acc.c"));
     return PJ_SUCCESS;
 }
-
 
 /*
  * Add local account
