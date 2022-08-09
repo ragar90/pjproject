@@ -879,7 +879,7 @@ void Endpoint::on_reg_started(pjsua_acc_id acc_id, pj_bool_t renew)
 
 void Endpoint::on_reg_state2(pjsua_acc_id acc_id, pjsua_reg_info *info)
 {
-	PJ_LOG(4, (THIS_FILE, "Endpoint::on_reg_state2: before Account *acc = lookupAcc(acc_id, "on_reg_state2()")"));
+	PJ_LOG(4, (THIS_FILE, "Endpoint::on_reg_state2: before Account *acc = lookupAcc(acc_id, on_reg_state2())"));
     Account *acc = lookupAcc(acc_id, "on_reg_state2()");
     if (!acc) {
 	return;
