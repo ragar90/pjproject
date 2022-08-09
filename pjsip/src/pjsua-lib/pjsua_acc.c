@@ -2522,13 +2522,16 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	 param->code == PJSIP_SC_TEMPORARILY_UNAVAILABLE ||
 	 PJSIP_IS_STATUS_IN_CLASS(param->code, 600))) /* Global failure */
     {
+	PJ_LOG(4, (THIS_FILE, "Scheduling registration"));
 	schedule_reregistration(acc);
     }
 
     /* Call the registration status callback */
 
     if (pjsua_var.ua_cfg.cb.on_reg_state) {
+	PJ_LOG(4, (THIS_FILE, "Calling the registration status callback"));
 	(*pjsua_var.ua_cfg.cb.on_reg_state)(acc->index);
+	PJ_LOG(4, (THIS_FILE, "Registration status callback called"));
     }
 
     if (pjsua_var.ua_cfg.cb.on_reg_state2) {
@@ -2591,8 +2594,10 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	}
     }
 
+	PJ_LOG(4, (THIS_FILE, "Unlocking PJSUA"));
     PJSUA_UNLOCK();
     pj_log_pop_indent();
+	PJ_LOG(4, (THIS_FILE, "Finished regc_cb"));
 }
 
 
