@@ -2529,7 +2529,7 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
     /* Call the registration status callback */
 
     if (pjsua_var.ua_cfg.cb.on_reg_state) {
-	PJ_LOG(4, (THIS_FILE, "Calling the registration status callback"));
+	PJ_LOG(4, (THIS_FILE, "Calling the registration status callback on_reg_state"));
 	(*pjsua_var.ua_cfg.cb.on_reg_state)(acc->index);
 	PJ_LOG(4, (THIS_FILE, "Registration status callback called"));
     }
@@ -2542,7 +2542,9 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	reg_info.cbparam = param;
 	reg_info.regc = param->regc;
 	reg_info.renew = !param->is_unreg;
+	PJ_LOG(4, (THIS_FILE, "Calling the registration status callback on_reg_state2"));
 	(*pjsua_var.ua_cfg.cb.on_reg_state2)(acc->index, &reg_info);
+	PJ_LOG(4, (THIS_FILE, "Registration status callback on_reg_state2 called"));
     }
 
     if (acc->ip_change_op == PJSUA_IP_CHANGE_OP_ACC_UPDATE_CONTACT) {
