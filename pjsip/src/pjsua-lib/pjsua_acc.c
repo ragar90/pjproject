@@ -2542,6 +2542,18 @@ static void regc_cb(struct pjsip_regc_cbparam *param)
 	reg_info.cbparam = param;
 	reg_info.regc = param->regc;
 	reg_info.renew = !param->is_unreg;
+	if(pjsua_var == null){
+		PJ_LOG(4, (THIS_FILE, "pjsua_var is null"));
+	}
+	if(*pjsua_var.ua_cfg  == null){
+		PJ_LOG(4, (THIS_FILE, "*pjsua_var.ua_cfg is null"));
+	}
+	if(*pjsua_var.ua_cfg.cb == null){
+		PJ_LOG(4, (THIS_FILE, "*pjsua_var.ua_cfg.cb is null"));
+	}
+	if(*pjsua_var.ua_cfg.cb.on_reg_state2 == null){
+		PJ_LOG(4, (THIS_FILE, "*pjsua_var.ua_cfg.cb.on_reg_state2 is null"));
+	}
 	PJ_LOG(4, (THIS_FILE, "Calling the registration status callback on_reg_state2"));
 	(*pjsua_var.ua_cfg.cb.on_reg_state2)(acc->index, &reg_info);
 	PJ_LOG(4, (THIS_FILE, "Registration status callback on_reg_state2 called"));
