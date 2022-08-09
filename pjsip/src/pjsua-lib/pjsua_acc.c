@@ -459,12 +459,14 @@ PJ_DEF(pj_status_t) pjsua_acc_add( const pjsua_acc_config *cfg,
     acc = &pjsua_var.acc[id];
 
     /* Create pool for this account. */
+    PJ_LOG(4,(THIS_FILE, "Creating PJSIP Pool"));
     if (acc->pool)
 	pj_pool_reset(acc->pool);
     else
 	acc->pool = pjsua_pool_create("acc%p", PJSUA_POOL_LEN_ACC,
                                   PJSUA_POOL_INC_ACC);
 
+    PJ_LOG(4,(THIS_FILE, "PJSIP Pool Created"));
     /* Copy config */
     pjsua_acc_config_dup(acc->pool, &pjsua_var.acc[id].cfg, cfg);
     
@@ -495,6 +497,7 @@ PJ_DEF(pj_status_t) pjsua_acc_add( const pjsua_acc_config *cfg,
     /* Get CRC of global outbound proxy setting */
     acc->global_route_crc=calc_proxy_crc(pjsua_var.ua_cfg.outbound_proxy,
 					 pjsua_var.ua_cfg.outbound_proxy_cnt);
+    PJ_LOG(4,(THIS_FILE, "Initializing account"));
 
     status = initialize_acc(id);
     if (status != PJ_SUCCESS) {
