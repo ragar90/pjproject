@@ -1047,6 +1047,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
 	unsigned ii;
 
 	/* Create DNS resolver */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Create DNS resolver"));
 	status = pjsip_endpt_create_resolver(pjsua_var.endpt, 
 					     &pjsua_var.resolver);
 	if (status != PJ_SUCCESS) {
@@ -1055,6 +1056,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
 	}
 
 	/* Configure nameserver for the DNS resolver */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Configure nameserver for the DNS resolver"));
 	status = pj_dns_resolver_set_ns(pjsua_var.resolver, 
 					ua_cfg->nameserver_count,
 					ua_cfg->nameserver, NULL);
@@ -1064,6 +1066,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
 	}
 
 	/* Set this DNS resolver to be used by the SIP resolver */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Set this DNS resolver to be used by the SIP resolver"));
 	status = pjsip_endpt_set_resolver(pjsua_var.endpt, pjsua_var.resolver);
 	if (status != PJ_SUCCESS) {
 	    pjsua_perror(THIS_FILE, "Error setting DNS resolver", status);
@@ -1071,6 +1074,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
 	}
 
 	/* Print nameservers */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Print nameservers"));
 	for (ii=0; ii<ua_cfg->nameserver_count; ++ii) {
 	    PJ_LOG(4,(THIS_FILE, "Nameserver %.*s added",
 		      (int)ua_cfg->nameserver[ii].slen,
@@ -1085,11 +1089,13 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
     /* Init SIP UA: */
 
     /* Initialize transaction layer: */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize transaction layer"));
     status = pjsip_tsx_layer_init_module(pjsua_var.endpt);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
 
     /* Initialize UA layer module: */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize UA layer module"));
     pj_bzero(&ua_init_param, sizeof(ua_init_param));
     if (ua_cfg->hangup_forked_call) {
 	ua_init_param.on_dlg_forked = &on_dlg_forked;
@@ -1099,18 +1105,22 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
 
 
     /* Initialize Replaces support. */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize Replaces support"));
     status = pjsip_replaces_init_module( pjsua_var.endpt );
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
     /* Initialize 100rel support */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize 100rel support"));
     status = pjsip_100rel_init_module(pjsua_var.endpt);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
     /* Initialize session timer support */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize session timer support "));
     status = pjsip_timer_init_module(pjsua_var.endpt);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
     /* Initialize and register PJSUA application module. */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize and register PJSUA application module"));
     {
 	const pjsip_module mod_initializer = 
 	{
@@ -1136,6 +1146,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
     }
 
     /* Parse outbound proxies */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Parse outbound proxies"));
     for (i=0; i<ua_cfg->outbound_proxy_cnt; ++i) {
 	pj_str_t tmp;
     	pj_str_t hname = { "Route", 5};
@@ -1170,11 +1181,13 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
     
 
     /* Initialize PJSUA call subsystem: */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize PJSUA call subsystem"));
     status = pjsua_call_subsys_init(ua_cfg);
     if (status != PJ_SUCCESS)
 	goto on_error;
 
     /* Convert deprecated STUN settings */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Convert deprecated STUN settings"));
     if (pjsua_var.ua_cfg.stun_srv_cnt==0) {
 	if (pjsua_var.ua_cfg.stun_domain.slen) {
 	    pjsua_var.ua_cfg.stun_srv[pjsua_var.ua_cfg.stun_srv_cnt++] = 
@@ -1187,6 +1200,7 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
     }
 
     /* Start resolving STUN server */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Start resolving STUN server"));
     status = resolve_stun_server(PJ_FALSE, PJ_FALSE, 0);
     if (status != PJ_SUCCESS && status != PJ_EPENDING) {
 	pjsua_perror(THIS_FILE, "Error resolving STUN server", status);
@@ -1194,48 +1208,59 @@ PJ_DEF(pj_status_t) pjsua_init( const pjsua_config *ua_cfg,
     }
 
     /* Initialize PJSUA media subsystem */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize PJSUA media subsystem"));
     status = pjsua_media_subsys_init(media_cfg);
     if (status != PJ_SUCCESS)
 	goto on_error;
 
 
     /* Init core SIMPLE module : */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Init core SIMPLE module"));
     status = pjsip_evsub_init_module(pjsua_var.endpt);
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
 
     /* Init presence module: */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init():  Init presence module"));
     status = pjsip_pres_init_module( pjsua_var.endpt, pjsip_evsub_instance());
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
     /* Initialize MWI support */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Initialize MWI support"));
     status = pjsip_mwi_init_module(pjsua_var.endpt, pjsip_evsub_instance());
 
     /* Init PUBLISH module */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Init PUBLISH module"));
     pjsip_publishc_init_module(pjsua_var.endpt);
 
     /* Init xfer/REFER module */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Init xfer/REFER module"));
     status = pjsip_xfer_init_module( pjsua_var.endpt );
     PJ_ASSERT_RETURN(status == PJ_SUCCESS, status);
 
     /* Init pjsua presence handler: */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Init pjsua presence handler"));
     status = pjsua_pres_init();
     if (status != PJ_SUCCESS)
 	goto on_error;
 
     /* Init out-of-dialog MESSAGE request handler. */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Init out-of-dialog MESSAGE request handler."));
     status = pjsua_im_init();
     if (status != PJ_SUCCESS)
 	goto on_error;
 
     /* Register OPTIONS handler */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Register OPTIONS handler"));
     pjsip_endpt_register_module(pjsua_var.endpt, &pjsua_options_handler);
 
     /* Add OPTIONS in Allow header */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Add OPTIONS in Allow header"));
     pjsip_endpt_add_capability(pjsua_var.endpt, NULL, PJSIP_H_ALLOW,
 			       NULL, 1, &STR_OPTIONS);
 
     /* Start worker thread if needed. */
+	PJ_LOG(4, (THIS_FILE, "pjsua_init(): Start worker thread if needed."));
     if (pjsua_var.ua_cfg.thread_cnt) {
 	unsigned ii;
 

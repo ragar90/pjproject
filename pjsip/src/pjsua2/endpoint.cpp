@@ -1894,8 +1894,10 @@ void Endpoint::libInit(const EpConfig &prmEpConfig) PJSUA2_THROW(Error)
     	&Endpoint::stun_resolve_cb;
 
     /* Init! */
+	PJ_LOG(4, (THIS_FILE, "Endpoint::libIni: before pjsua_init"));
     PJSUA2_CHECK_EXPR( pjsua_init(&ua_cfg, &log_cfg, &med_cfg) );
 
+	PJ_LOG(4, (THIS_FILE, "Endpoint::libIni: Register worker threads"));
     /* Register worker threads */
     int i = pjsua_var.ua_cfg.thread_cnt;
     while (i) {
@@ -1904,6 +1906,7 @@ void Endpoint::libInit(const EpConfig &prmEpConfig) PJSUA2_THROW(Error)
 	    threadDescMap[t] = NULL;
     }
 
+	PJ_LOG(4, (THIS_FILE, "Endpoint::libIni: Register media endpoint worker thread"));
     /* Register media endpoint worker thread */
     pjmedia_endpt *medept = pjsua_get_pjmedia_endpt();
     i = pjmedia_endpt_get_thread_count(medept);
@@ -1913,6 +1916,7 @@ void Endpoint::libInit(const EpConfig &prmEpConfig) PJSUA2_THROW(Error)
 	    threadDescMap[t] = NULL;
     }
     
+	PJ_LOG(4, (THIS_FILE, "Endpoint::libIni: before pj_mutex_create_simple"));
     PJSUA2_CHECK_EXPR( pj_mutex_create_simple(pjsua_var.pool, "threadDesc",
     				    	      &threadDescMutex) );
 
