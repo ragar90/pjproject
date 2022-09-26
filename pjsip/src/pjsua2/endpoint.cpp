@@ -828,6 +828,7 @@ Call *Endpoint::lookupCall(int call_id, const char *op)
 void Endpoint::on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id,
                                 pjsip_rx_data *rdata)
 {
+	PJ_LOG(4, (THIS_FILE, "Endpoint::on_incoming_call(): Received invite on Endpoint::on_incoming_call()"));
     Account *acc = lookupAcc(acc_id, "on_incoming_call()");
     if (!acc) {
 	pjsua_call_hangup(call_id, PJSIP_SC_INTERNAL_SERVER_ERROR, NULL, NULL);
@@ -840,6 +841,7 @@ void Endpoint::on_incoming_call(pjsua_acc_id acc_id, pjsua_call_id call_id,
 	 * inside the on_create_media_transport() callback. So we simply 
 	 * return here to avoid calling	the callback twice. 
 	 */
+	PJ_LOG(4, (THIS_FILE, "not calling acc->onIncomingCall from Endpoint::on_incoming_call"));
 	return;
     }
 
@@ -1679,6 +1681,7 @@ Endpoint::on_create_media_transport(pjsua_call_id call_id,
                                     pjmedia_transport *base_tp,
                                     unsigned flags)
 {
+	PJ_LOG(4, (THIS_FILE, "Endpoint::on_create_media_transport(): Received invite on Endpoint::on_create_media_transport()"));
     Call *call = Call::lookup(call_id);
     if (!call) {
 	pjsua_call *in_call = &pjsua_var.calls[call_id];
@@ -1703,6 +1706,7 @@ Endpoint::on_create_media_transport(pjsua_call_id call_id,
 		++pjsua_var.call_cnt;
 	    }
 	} else {
+	    PJ_LOG(4, (THIS_FILE, "not calling acc->onIncomingCall from Endpoint::on_create_media_transport"));
 	    return base_tp;
 	}
     }
