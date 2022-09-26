@@ -723,6 +723,7 @@ void Call::hangup(const CallOpParam &prm) PJSUA2_THROW(Error)
 {
     call_param param(prm.txOption, prm.opt, prm.reason);
     
+	PJ_LOG(4, (THIS_FILE, "Call::hangup(): About to hangup call"));
     PJSUA2_CHECK_EXPR( pjsua_call_hangup(id, prm.statusCode, param.p_reason,
                                          param.p_msg_data) );
 }

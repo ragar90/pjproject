@@ -2956,6 +2956,7 @@ PJ_DEF(pj_status_t) pjsua_call_hangup(pjsua_call_id call_id,
 				      const pj_str_t *reason,
 				      const pjsua_msg_data *msg_data)
 {
+	PJ_LOG(4, (THIS_FILE, "pjsua_call_hangup()): hanging up call...."));
     pjsua_call *call;
     pjsip_dialog *dlg = NULL;
     pj_status_t status;
