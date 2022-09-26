@@ -700,16 +700,19 @@ void Call::makeCall(const string &dst_uri, const CallOpParam &prm)
 
 void Call::answer(const CallOpParam &prm) PJSUA2_THROW(Error)
 {
+	PJ_LOG(4, (THIS_FILE, "Call::answer(): Answering call...."));
     call_param param(prm.txOption, prm.opt, prm.reason,
     		     sdp_pool, prm.sdp.wholeSdp);
     
     if (param.sdp) {
+	    PJ_LOG(4, (THIS_FILE, "Call::answer(): About to answer SDP call"));
     	PJSUA2_CHECK_EXPR( pjsua_call_answer_with_sdp(id, param.sdp,
 						      param.p_opt,
     						      prm.statusCode,
                                               	      param.p_reason,
                                               	      param.p_msg_data) );
     } else {
+	    PJ_LOG(4, (THIS_FILE, "Call::answer(): About to answer Normal call"));
     	PJSUA2_CHECK_EXPR( pjsua_call_answer2(id, param.p_opt, prm.statusCode,
                                               param.p_reason,
                                               param.p_msg_data) );

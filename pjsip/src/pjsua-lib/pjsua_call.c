@@ -2643,6 +2643,9 @@ PJ_DEF(pj_status_t) pjsua_call_answer2(pjsua_call_id call_id,
     pj_log_push_indent();
 
     status = acquire_call("pjsua_call_answer()", call_id, &call, &dlg);
+	if(status == PJ_SUCCESS){
+	    PJ_LOG(4, (THIS_FILE, "pjsua_call_answer2(): Call answered succesfully"));
+	}
     if (status != PJ_SUCCESS)
 	goto on_return;
 
@@ -2793,6 +2796,7 @@ pjsua_call_answer_with_sdp(pjsua_call_id call_id,
 			   const pj_str_t *reason,
 			   const pjsua_msg_data *msg_data)
 {
+	PJ_LOG(4, (THIS_FILE, "inside pjsua_call_answer_with_sdp"));
     pjsua_call *call;
     pjsip_dialog *dlg = NULL;
     pj_status_t status;
@@ -2805,6 +2809,7 @@ pjsua_call_answer_with_sdp(pjsua_call_id call_id,
     if (status != PJ_SUCCESS)
 	return status;
 
+	PJ_LOG(4, (THIS_FILE, "setting sdp_answer"));
     status = pjsip_inv_set_sdp_answer(call->inv, sdp);
 
     pjsip_dlg_dec_lock(dlg);
@@ -2812,6 +2817,7 @@ pjsua_call_answer_with_sdp(pjsua_call_id call_id,
     if (status != PJ_SUCCESS)
     	return status;
     
+	PJ_LOG(4, (THIS_FILE, "about to call pjsua_call_answer2 from pjsua_call_answer_with_sdp"));
     return pjsua_call_answer2(call_id, opt, code, reason, msg_data);
 }
 
